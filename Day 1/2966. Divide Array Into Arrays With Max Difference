@@ -1,0 +1,36 @@
+/*
+You are given an integer array nums of size n and a positive integer k.
+
+Divide the array into one or more arrays of size 3 satisfying the following conditions:
+
+Each element of nums should be in exactly one array.
+The difference between any two elements in one array is less than or equal to k.
+Return a 2D array containing all the arrays. If it is impossible to satisfy the conditions, return an empty array. 
+And if there are multiple answers, return any of them.
+
+*/
+class Solution {
+public:
+    bool check(vector<int> &v, int k){
+        if(v[1]-v[0]<=k && v[2]-v[0]<=k && v[2]-v[1]<=k) return true;
+        return false;
+    }
+    vector<vector<int>> divideArray(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int n=nums.size();
+        vector<vector<int>> ans;
+        vector<int> v(3);
+        for(int i=0;i<=n-3;i+=3){
+            v[i%3]=nums[i];
+            v[(i+1)%3]=nums[i+1];
+            v[(i+2)%3]=nums[i+2];
+            if(check(v, k)){
+                cout<<v[0]<<v[1]<<v[2]<<" ";
+                ans.push_back(v);
+                //v.clear();
+            }
+            else return {};
+        }
+        return ans;
+    }
+};
